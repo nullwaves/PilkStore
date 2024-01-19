@@ -1,10 +1,10 @@
 namespace PilkUI;
 
-[QueryProperty("PLocation", nameof(PilkLocation))]
+[QueryProperty("PLocation", nameof(Location))]
 public partial class LocationDetailPage : ContentPage
 {
-	PilkLocation pLocation;
-	public PilkLocation PLocation
+	Location pLocation;
+	public Location PLocation
 	{
 		get => pLocation;
 		set
