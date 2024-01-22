@@ -9,9 +9,16 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             FontSize="Header"/>
+        <Button
+            IsVisible="{Binding PLocation.HasParent}"
+            Text="{Binding PLocation.Parent}"
+            Clicked="ParentButton_Clicked"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
         <Label 
             Text="{Binding PLocation.Description}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <Image Source="{Binding PLocation.Image}" MaximumWidthRequest="512"/>
     </VerticalStackLayout>
 </ContentPage>

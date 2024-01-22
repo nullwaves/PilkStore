@@ -43,5 +43,24 @@ namespace PilkUI.Rest
             }
             return locations;
         }
+
+        public async Task<Location> GetLocationFromUriAsync(Uri uri)
+        {
+            var location = new Location();
+            try
+            {
+                var response = await _client.GetAsync(uri);
+                if(response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    location = JsonSerializer.Deserialize<Location>(content, _serializerOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return location;
+        }
     }
 }

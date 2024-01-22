@@ -13,10 +13,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
-        fields = ['url', 'parent', 'name', 'description', 'image']
+        fields = ['pk', 'url', 'parent', 'name', 'description', 'image']
 
 
 class PilkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Pilk
-        fields = ['url', 'location', 'name', 'description', 'image']
+        fields = ['pk', 'url', 'location', 'name', 'description', 'image']
