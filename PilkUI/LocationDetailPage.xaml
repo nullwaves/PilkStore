@@ -5,20 +5,36 @@
              Title="Location Detail">
     <VerticalStackLayout>
         <Label 
-            Text="{Binding PLocation.Name}"
+            Text="{Binding Location.Name}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
             FontSize="Header"/>
         <Button
-            IsVisible="{Binding PLocation.HasParent}"
-            Text="{Binding PLocation.Parent}"
+            IsVisible="{Binding Location.HasParent}"
+            Text="{Binding Location.Parent}"
             Clicked="ParentButton_Clicked"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label 
-            Text="{Binding PLocation.Description}"
+            Text="{Binding Location.Description}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Image Source="{Binding PLocation.Image}" MaximumWidthRequest="512"/>
+        <Image Source="{Binding Location.Image}" MaximumWidthRequest="256"/>
+        <Label Text="Children" FontSize="Large" FontAttributes="Bold" />
+        <ListView ItemsSource="{Binding Children}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <FlexLayout Padding="20">
+                            <Image Source="{Binding Image}" HeightRequest="50"/>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}" />
+                            </StackLayout>
+                        </FlexLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </VerticalStackLayout>
 </ContentPage>

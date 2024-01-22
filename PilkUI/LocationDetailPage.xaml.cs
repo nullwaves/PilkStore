@@ -3,16 +3,16 @@ using PilkUI.Rest;
 
 namespace PilkUI;
 
-[QueryProperty("PLocation", nameof(Location))]
+[QueryProperty("Location", nameof(PilkUI.Location))]
 public partial class LocationDetailPage : ContentPage
 {
-	Location pLocation;
-	public Location PLocation
+	Location _location;
+	public Location Location
 	{
-		get => pLocation;
+		get => _location;
 		set
 		{
-			pLocation = value;
+			_location = value;
 			OnPropertyChanged();
 		}
 	}
@@ -25,7 +25,9 @@ public partial class LocationDetailPage : ContentPage
 
     private async void ParentButton_Clicked(object sender, EventArgs e)
     {
-		Location location = await RestService.Instance.GetLocationFromUriAsync(PLocation.Parent);
-        await Shell.Current.GoToAsync("../Details", true, new Dictionary<string, object>() { { nameof(Location), location } });
+		if (Location.Parent is null) return;
+		var location = await RestService.Instance.GetLocationFromUriAsync(Location.Parent);
+		if (location is null) return;
+        await Shell.Current.GoToAsync("../Details", true, new Dictionary<string, object>() { { nameof(PilkUI.Location), location } });
     }
 }
