@@ -4,17 +4,17 @@
 
     {
         public int Pk { get; set; }
-        public Uri Parent { get; set; }
+        public Uri? Parent { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Uri Image { get; set; }
-
-        public bool HasParent => Parent != null;
+        public Uri? Image { get; set; }
+        public List<Uri> Children { get; set; }
 
         public Location() 
         {
             Name = string.Empty;
             Description = string.Empty;
+            Children = [];
         }
     }
 }

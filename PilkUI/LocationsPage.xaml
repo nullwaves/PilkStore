@@ -9,10 +9,13 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Description}" />
-                        </StackLayout>
+                        <FlexLayout Padding="20">
+                            <Image Source="{Binding Image}" HeightRequest="50"/>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}" />
+                            </StackLayout>
+                        </FlexLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

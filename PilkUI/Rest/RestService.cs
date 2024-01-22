@@ -4,14 +4,12 @@ using System.Text.Json;
 
 namespace PilkUI.Rest
 {
-
-
     public class RestService
     {
-        public static RestService Instance = new();
+        public static readonly RestService Instance = new();
 
-        HttpClient _client;
-        JsonSerializerOptions _serializerOptions;
+        readonly HttpClient _client;
+        readonly JsonSerializerOptions _serializerOptions;
         
         public RestService()
         {
@@ -23,11 +21,11 @@ namespace PilkUI.Rest
             };
         }
 
-        public async Task<List<Location>> GetLocationsAsync()
+        public async Task<List<Location>?> GetLocationsAsync()
         {
             var locations = new List<Location>();
 
-            Uri uri = new Uri("http://localhost:8000/locations");
+            Uri uri = new("http://localhost:8000/locations");
             try
             {
                 HttpResponseMessage response = await _client.GetAsync(uri);
@@ -44,7 +42,7 @@ namespace PilkUI.Rest
             return locations;
         }
 
-        public async Task<Location> GetLocationFromUriAsync(Uri uri)
+        public async Task<Location?> GetLocationFromUriAsync(Uri uri)
         {
             var location = new Location();
             try

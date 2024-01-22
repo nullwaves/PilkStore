@@ -9,7 +9,7 @@ public partial class LocationsPage : ContentPage
 	public LocationsPage()
 	{
 		InitializeComponent();
-		Locations = new();
+		Locations = [];
 		RefreshLocations();
 		BindingContext = this;
         LocationListView.ItemTapped += LocationListView_ItemTapped;
@@ -17,14 +17,21 @@ public partial class LocationsPage : ContentPage
 
 	private async void RefreshLocations()
 	{
-        Locations = await RestService.Instance.GetLocationsAsync();
-		OnPropertyChanged(nameof(Locations));
+		var loc = await RestService.Instance.GetLocationsAsync();
+		if (loc is not null)
+		{
+			Locations = loc;
+			OnPropertyChanged(nameof(Locations));
+		}
+		else
+		{
+			await DisplayAlert("API Error", "Error fetching list of Locations.", "Okay");
+		}
     }
 
     private async void LocationListView_ItemTapped(object? sender, ItemTappedEventArgs e)
     {
-		var location = e.Item as Location;
-		if (location == null) return;
-		await Shell.Current.GoToAsync("/Details", new Dictionary<string, object>() { { nameof(Location), location } });
+        if (e.Item is not Location location) return;
+        await Shell.Current.GoToAsync("/Details", new Dictionary<string, object>() { { nameof(Location), location } });
     }
 }
