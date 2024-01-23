@@ -6,14 +6,7 @@
     xmlns:local="clr-namespace:PilkUI"
     Title="PilkUI">
 
-    <FlyoutItem Title="Home">
-        <Tab>
-            <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-        </Tab>
-
-    </FlyoutItem>
+    
     <FlyoutItem Title="Locations">
         <Tab>
             <ShellContent

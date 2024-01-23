@@ -1,6 +1,7 @@
 ﻿
 using System.Diagnostics;
 using System.Text.Json;
+using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI.Rest
 {

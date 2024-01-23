@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:PilkUI.Rest.Models"
+             xmlns:viewmodel="clr-namespace:PilkUI.ViewModel"
              x:Class="PilkUI.LocationDetailPage"
-             Title="Location Detail">
+             Title="Location Detail"
+             x:DataType="viewmodel:LocationDetailViewModel">
+    <ContentPage.BindingContext>
+        <viewmodel:LocationDetailViewModel/>
+    </ContentPage.BindingContext>
     <VerticalStackLayout>
         <Label 
             Text="{Binding Location.Name}"
@@ -10,9 +16,9 @@
             HorizontalOptions="Center" 
             FontSize="Header"/>
         <Button
-            IsVisible="{Binding Location.HasParent}"
-            Text="{Binding Location.Parent}"
-            Clicked="ParentButton_Clicked"
+            IsVisible="{Binding HasParent}"
+            Text="{Binding Parent.Name}"
+            Command="{Binding GoToParentCommand}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label 
@@ -20,21 +26,23 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Image Source="{Binding Location.Image}" MaximumWidthRequest="256"/>
-        <Label Text="Children" FontSize="Large" FontAttributes="Bold" />
-        <ListView ItemsSource="{Binding Children}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <FlexLayout Padding="20">
-                            <Image Source="{Binding Image}" HeightRequest="50"/>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                                <Label Text="{Binding Description}" />
-                            </StackLayout>
-                        </FlexLayout>
-                    </ViewCell>
+        <Label Text="Children" FontSize="Large" FontAttributes="Bold" IsVisible="{Binding HasChildren}"/>
+        <CollectionView ItemsSource="{Binding Children}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Location">
+                    <Grid Padding="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Image}" HeightRequest="50" Grid.Column="0"/>
+                        <StackLayout Padding="10" Grid.Column="1">
+                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Description}" />
+                        </StackLayout>
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

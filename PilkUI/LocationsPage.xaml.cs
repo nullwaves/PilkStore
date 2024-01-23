@@ -1,4 +1,5 @@
 using PilkUI.Rest;
+using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI;
 

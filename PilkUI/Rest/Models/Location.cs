@@ -1,4 +1,4 @@
-﻿namespace PilkUI
+﻿namespace PilkUI.Rest.Models
 {
     public class Location
 
