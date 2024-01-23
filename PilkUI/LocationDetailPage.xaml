@@ -27,7 +27,7 @@
             HorizontalOptions="Center" />
         <Image Source="{Binding Location.Image}" MaximumWidthRequest="256"/>
         <Label Text="Children" FontSize="Large" FontAttributes="Bold" IsVisible="{Binding HasChildren}"/>
-        <CollectionView ItemsSource="{Binding Children}">
+        <CollectionView ItemsSource="{Binding Children}" SelectedItem="{Binding SelectedChild}"  SelectionMode="Single" SelectionChangedCommand="{Binding GoToChildCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Location">
                     <Grid Padding="20">

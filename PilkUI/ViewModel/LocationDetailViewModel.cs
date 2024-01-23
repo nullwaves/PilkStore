@@ -15,6 +15,8 @@ namespace PilkUI.ViewModel
         Location? parent;
         [ObservableProperty]
         List<Location>? children = [];
+        [ObservableProperty]
+        Location? selectedChild;
 
         public bool HasParent => Parent != null;
         public bool HasChildren => Children?.Count > 0;
@@ -41,14 +43,26 @@ namespace PilkUI.ViewModel
                         Children.Add(child);
                 }
             }
+            OnPropertyChanged(nameof(Parent));
             OnPropertyChanged(nameof(Children));
+            OnPropertyChanged(nameof(HasChildren));
+            OnPropertyChanged(nameof(HasParent));
         }
 
         [RelayCommand]
         async Task GoToParent()
         { 
             if (Parent is null) return;
-            await Shell.Current.GoToAsync("../Details", true, new Dictionary<string, object>() { { nameof(Location), Parent } });
+            await Shell.Current.GoToAsync("..", false);
+            await Shell.Current.GoToAsync("/Details", true, new Dictionary<string, object>() { { nameof(Location), Parent } });
+        }
+
+        [RelayCommand]
+        async Task GoToChild()
+        {
+            if (SelectedChild is null) return;
+            await Shell.Current.GoToAsync("..", false);
+            await Shell.Current.GoToAsync("/Details", true, new Dictionary<string, object>() { { nameof(Location), SelectedChild } });
         }
     }
 }
