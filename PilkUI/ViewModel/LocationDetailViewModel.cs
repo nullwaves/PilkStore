@@ -8,9 +8,11 @@ namespace PilkUI.ViewModel
     [QueryProperty("Location", nameof(Location))]
     internal partial class LocationDetailViewModel: ObservableObject, IQueryAttributable
     {
+        // Query Property
         [ObservableProperty]
         private Location location = new();
 
+        // Post-Query Properties
         [ObservableProperty]
         Location? parent;
         [ObservableProperty]
@@ -20,6 +22,8 @@ namespace PilkUI.ViewModel
 
         public bool HasParent => Parent != null;
         public bool HasChildren => Children?.Count > 0;
+
+        private RestService _server = RestService.Instance;
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -33,12 +37,12 @@ namespace PilkUI.ViewModel
                 Location = loc;
                 if (Location.Parent != null)
                 {
-                    Parent = await RestService.Instance.GetLocationFromUriAsync(Location.Parent);
+                    Parent = await _server.GetLocationFromUriAsync(Location.Parent);
                 }
                 Children = [];
                 foreach (var link in Location.Children)
                 {
-                    var child = await RestService.Instance.GetLocationFromUriAsync(link);
+                    var child = await _server.GetLocationFromUriAsync(link);
                     if (child is not null)
                         Children.Add(child);
                 }
