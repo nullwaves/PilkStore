@@ -1,0 +1,16 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PilkUI.LoadingPage">
+    <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Loading Indicator -->
+    <ActivityIndicator IsRunning="True" Color="DarkMagenta" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Label Text="Loading..." FontSize="18" />
+    </StackLayout>
+    </Grid>
+</ContentPage>

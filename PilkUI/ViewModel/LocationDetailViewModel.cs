@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PilkUI.Rest;
+using System.Collections.ObjectModel;
 using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI.ViewModel
@@ -16,7 +17,7 @@ namespace PilkUI.ViewModel
         [ObservableProperty]
         Location? parent;
         [ObservableProperty]
-        List<Location>? children = [];
+        ObservableCollection<Location>? children = [];
         [ObservableProperty]
         Location? selectedChild;
 
@@ -35,10 +36,7 @@ namespace PilkUI.ViewModel
                     throw new NullReferenceException();
                 }
                 Location = loc;
-                if (Location.Parent != null)
-                {
-                    Parent = await _server.GetLocationFromUriAsync(Location.Parent);
-                }
+                Parent = Location.Parent is null ? null : await _server.GetLocationFromUriAsync(Location.Parent);
                 Children = [];
                 foreach (var link in Location.Children)
                 {
@@ -57,16 +55,16 @@ namespace PilkUI.ViewModel
         async Task GoToParent()
         { 
             if (Parent is null) return;
-            await Shell.Current.GoToAsync("..", false);
-            await Shell.Current.GoToAsync("/Details", true, new Dictionary<string, object>() { { nameof(Location), Parent } });
+            //await Shell.Current.GoToAsync("Loading");
+            await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), Parent } });
         }
 
         [RelayCommand]
         async Task GoToChild()
         {
             if (SelectedChild is null) return;
-            await Shell.Current.GoToAsync("..", false);
-            await Shell.Current.GoToAsync("/Details", true, new Dictionary<string, object>() { { nameof(Location), SelectedChild } });
+            //await Shell.Current.GoToAsync("Loading");
+            await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), SelectedChild } });
         }
     }
 }

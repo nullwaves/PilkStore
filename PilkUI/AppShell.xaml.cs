@@ -5,6 +5,7 @@
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute("Loading", typeof(LoadingPage));
             Routing.RegisterRoute("Locations/Details", typeof(LocationDetailPage));
         }
     }
