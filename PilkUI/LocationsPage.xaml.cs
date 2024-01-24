@@ -7,7 +7,6 @@ namespace PilkUI;
 public partial class LocationsPage : ContentPage
 {
 	public List<Location> Locations { get; set; }
-	public string CreateButtonSvgPath => "Resources/Images/folder_add.svg";
 
     [RelayCommand]
 	async Task GoToCreate()

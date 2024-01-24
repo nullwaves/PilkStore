@@ -4,12 +4,12 @@
              x:Class="PilkUI.LocationsPage"
              Title="Locations">
     <StackLayout Padding="10">
-        <ListView x:Name="LocationListView"
-                        ItemsSource="{Binding Locations}">
+        <ListView x:Name="LocationListView" 
+                  ItemsSource="{Binding Locations}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <FlexLayout Padding="20">
+                        <FlexLayout>
                             <Image Source="{Binding Image}" HeightRequest="50"/>
                             <StackLayout Padding="10">
                                 <Label Text="{Binding Name}" FontAttributes="Bold"/>

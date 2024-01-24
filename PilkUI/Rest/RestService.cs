@@ -11,10 +11,13 @@ namespace PilkUI.Rest
 
         readonly HttpClient _client;
         readonly JsonSerializerOptions _serializerOptions;
+
+        string _server => SettingsService.GetPilkServer();
+        string _locationsEndpoint => $"{_server}/locations/";
         
         public RestService()
         {
-            _client = new();
+            _client = CreateClient();
             _serializerOptions = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -22,11 +25,21 @@ namespace PilkUI.Rest
             };
         }
 
+        private HttpClient CreateClient()
+        {
+#if __ANDROID__
+            return new HttpClient(new Xamarin.Android.Net.AndroidMessageHandler());
+#else
+            return new HttpClient();
+#endif
+        }
+
         public async Task<List<Location>?> GetLocationsAsync()
         {
             var locations = new List<Location>();
 
-            Uri uri = new("http://localhost:8000/locations");
+            Uri uri = new(_locationsEndpoint);
+            Debug.WriteLine($"\tEndpoint: {_locationsEndpoint}");
             try
             {
                 HttpResponseMessage response = await _client.GetAsync(uri);

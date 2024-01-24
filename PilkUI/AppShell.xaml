@@ -13,7 +13,13 @@
                 ContentTemplate="{DataTemplate local:LocationsPage}"
                 Route="Locations" />
         </Tab>
-
+    </FlyoutItem>
+    <FlyoutItem Title="Settings">
+        <Tab>
+            <ShellContent
+                ContentTemplate="{DataTemplate local:SettingsPage}"
+                Route="Settings" />
+        </Tab>
     </FlyoutItem>
 
 </Shell>
