@@ -11,7 +11,7 @@ namespace PilkUI.ViewModel
     {
         // Query Property
         [ObservableProperty]
-        private Location location = new();
+        private Location location;
 
         // Post-Query Properties
         [ObservableProperty]
@@ -36,11 +36,12 @@ namespace PilkUI.ViewModel
                     throw new NullReferenceException();
                 }
                 Location = loc;
-                Parent = Location.Parent is null ? null : await _server.GetLocationFromUriAsync(Location.Parent);
+                var par = Location.Parent;
+                Parent = par is null ? null : await _server.GetLocationFromPkAsync((int)par);
                 Children = [];
                 foreach (var link in Location.Children)
                 {
-                    var child = await _server.GetLocationFromUriAsync(link);
+                    var child = await _server.GetLocationFromPkAsync(link);
                     if (child is not null)
                         Children.Add(child);
                 }

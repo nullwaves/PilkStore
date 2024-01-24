@@ -1,4 +1,5 @@
 ﻿
+using RestSharp;
 using System.Diagnostics;
 using System.Text.Json;
 using Location = PilkUI.Rest.Models.Location;
@@ -9,70 +10,51 @@ namespace PilkUI.Rest
     {
         public static readonly RestService Instance = new();
 
-        readonly HttpClient _client;
-        readonly JsonSerializerOptions _serializerOptions;
+        readonly RestClient _client;
 
         string _server => SettingsService.GetPilkServer();
-        string _locationsEndpoint => $"{_server}/locations/";
+        RestRequest _locationsEndpoint => new("locations/");
         
         public RestService()
         {
             _client = CreateClient();
-            _serializerOptions = new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-            };
         }
 
-        private HttpClient CreateClient()
+        private RestClient CreateClient()
         {
+            var options = new RestClientOptions(_server);
 #if __ANDROID__
-            return new HttpClient(new Xamarin.Android.Net.AndroidMessageHandler());
-#else
-            return new HttpClient();
+            options.ConfigureMessageHandler(new Xamarin.Android.Net.AndroidMessageHandler());
 #endif
+            return new RestClient(options); 
         }
 
         public async Task<List<Location>?> GetLocationsAsync()
         {
-            var locations = new List<Location>();
-
-            Uri uri = new(_locationsEndpoint);
             Debug.WriteLine($"\tEndpoint: {_locationsEndpoint}");
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(uri);
-                if(response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    locations = JsonSerializer.Deserialize<List<Location>>(content, _serializerOptions);
-                }
+                return await _client.GetAsync<List<Location>>(_locationsEndpoint);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"\tREST ERROR: {ex.Message}");
             }
-            return locations;
+            return [];
         }
 
-        public async Task<Location?> GetLocationFromUriAsync(Uri uri)
+        public async Task<Location?> GetLocationFromPkAsync(int pk)
         {
-            var location = new Location();
             try
             {
-                var response = await _client.GetAsync(uri);
-                if(response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    location = JsonSerializer.Deserialize<Location>(content, _serializerOptions);
-                }
+                var request = new RestRequest($"/locations/{pk}");
+                return await _client.GetAsync<Location>(request);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"\tREST ERROR: {ex.Message}");
             }
-            return location;
+            return new();
         }
     }
 }
