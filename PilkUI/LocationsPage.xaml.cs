@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using PilkUI.Rest;
 using Location = PilkUI.Rest.Models.Location;
 
@@ -6,6 +7,13 @@ namespace PilkUI;
 public partial class LocationsPage : ContentPage
 {
 	public List<Location> Locations { get; set; }
+	public string CreateButtonSvgPath => "Resources/Images/folder_add.svg";
+
+    [RelayCommand]
+	async Task GoToCreate()
+	{
+		await Shell.Current.GoToAsync("/Create");
+	}
 
 	public LocationsPage()
 	{
