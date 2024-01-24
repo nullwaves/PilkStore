@@ -23,9 +23,6 @@ namespace PilkUI.Rest
         private RestClient CreateClient()
         {
             var options = new RestClientOptions(_server);
-#if __ANDROID__
-            options.ConfigureMessageHandler(new Xamarin.Android.Net.AndroidMessageHandler());
-#endif
             return new RestClient(options); 
         }
 
