@@ -5,6 +5,9 @@
              x:Class="PilkUI.LocationCreatePage"
              x:DataType="viewmodel:LocationCreateViewModel"
              Title="Create Location">
+    <ContentPage.BindingContext>
+        <viewmodel:LocationCreateViewModel />
+    </ContentPage.BindingContext>
     <VerticalStackLayout Padding="10">
         <!--Name-->
         <Label Text="Name" FontSize="16" Padding="10"/>
@@ -13,5 +16,11 @@
         <Label Text="Description" FontSize="16" Padding="10"/>
         <Editor Text="{Binding Description}" Placeholder="Enter description..." AutoSize="TextChanges" Margin="10"/>
         <!--TODO: Image-->
+        <!--Save Button-->
+        <Button Text="Save" 
+                Command="{Binding SaveLocationCommand}"
+                ImageSource="save.png"
+                MaximumWidthRequest="400"
+                Margin="10"/>
     </VerticalStackLayout>
 </ContentPage>

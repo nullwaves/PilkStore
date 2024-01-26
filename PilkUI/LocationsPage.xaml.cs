@@ -21,9 +21,15 @@ public partial class LocationsPage : ContentPage
 		RefreshLocations();
 		BindingContext = this;
         LocationListView.ItemTapped += LocationListView_ItemTapped;
+        NavigatedTo += LocationsPage_NavigatedTo;
 	}
 
-	private async void RefreshLocations()
+    private async void LocationsPage_NavigatedTo(object? sender, NavigatedToEventArgs e)
+    {
+		await RefreshLocations();
+    }
+
+    private async Task RefreshLocations()
 	{
 		var loc = await RestService.Instance.GetLocationsAsync();
 		if (loc is not null)

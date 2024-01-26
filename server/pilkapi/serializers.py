@@ -15,6 +15,7 @@ class LocationSerializer(serializers.ModelSerializer):
         model = Location
         fields = ['pk', 'url', 'parent', 'name', 'description', 'image',
                   'children', 'items']
+        extra_kwargs = {'image': {'required': False}}
 
 
 class PilkSerializer(serializers.ModelSerializer):
