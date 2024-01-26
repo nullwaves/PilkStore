@@ -21,6 +21,8 @@ namespace PilkUI.Rest.Serializers
                 {"children", Array.Empty<string>() },
                 {"items", Array.Empty<string>() },
             };
+            if (location.Parent is int parent)
+                dict.Add("parent", parent);
             return JsonSerializer.Serialize(dict, _serializerOptions);
         }
     }
