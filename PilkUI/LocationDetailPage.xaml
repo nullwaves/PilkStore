@@ -26,8 +26,15 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Image Source="{Binding Location.Image}" MaximumWidthRequest="256"/>
-        <Label Text="Children" FontSize="Large" FontAttributes="Bold" IsVisible="{Binding HasChildren}"/>
-        <CollectionView ItemsSource="{Binding Children}" SelectedItem="{Binding SelectedChild}"  SelectionMode="Single" SelectionChangedCommand="{Binding GoToChildCommand}">
+        <Label Text="Children" 
+               FontSize="Large" 
+               FontAttributes="Bold" 
+               IsVisible="{Binding HasChildren}"/>
+        <CollectionView ItemsSource="{Binding Children}" 
+                        SelectedItem="{Binding SelectedChild}"  
+                        SelectionMode="Single" 
+                        SelectionChangedCommand="{Binding GoToChildCommand}" 
+                        Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Location">
                     <Grid Padding="20">
@@ -44,5 +51,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button Text="Delete" 
+                BackgroundColor="Red" 
+                MaximumWidthRequest="80" 
+                TextColor="White" 
+                FontAttributes="Bold"
+                Clicked="DeleteLocation_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>

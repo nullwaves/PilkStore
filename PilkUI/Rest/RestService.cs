@@ -2,6 +2,7 @@
 using PilkUI.Rest.Serializers;
 using RestSharp;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ObjectiveC;
 using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI.Rest
@@ -54,7 +55,7 @@ namespace PilkUI.Rest
             return new();
         }
 
-        public async Task<Location?> PostLocation(Location location)
+        public async Task<Location?> PostLocationAsync(Location location)
         {
             try
             {
@@ -71,6 +72,22 @@ namespace PilkUI.Rest
                 Debug.WriteLine($"\tREST ERROR: {ex.Message}");
             }
             return null;
+        }
+
+        public async Task<bool> DeleteLocationAsync(Location location)
+        {
+            try
+            {
+                var request = new RestRequest($"/locations/{location.Pk}", method: Method.Delete);
+                var response = await _client.DeleteAsync(request);
+                if (response is not null)
+                    return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return false;
         }
     }
 }
