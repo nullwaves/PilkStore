@@ -29,6 +29,7 @@ namespace PilkUI.ViewModel
 
         private async void RefreshParents()
         {
+            Parents.Add(new Location() { Pk = -1, Name = "None"});
             var locs = await RestService.Instance.GetLocationsAsync();
             if (locs is null) return;
             foreach(var loc in locs)
@@ -40,7 +41,7 @@ namespace PilkUI.ViewModel
         {
             if (Name is null || Description is null) return;
             var newLocation = new Location() { Name = Name, Description = Description };
-            if (SelectedParent is Location parent)
+            if (SelectedParent is Location parent && parent.Pk > -1)
                 newLocation.Parent = parent.Pk;
             var response = await RestService.Instance.PostLocation(newLocation);
             if (response is not null)
