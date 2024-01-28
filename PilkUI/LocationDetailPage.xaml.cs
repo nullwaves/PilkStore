@@ -51,4 +51,26 @@ public partial class LocationDetailPage : ContentPage
             }
         }
     }
+
+    private async void CaptureImage_Clicked(object sender, EventArgs e)
+    {
+        if (!MediaPicker.Default.IsCaptureSupported)
+        {
+            await DisplayAlert("Error", "Image capture not supported on this device.", "Okay");
+            return;
+        }
+        if (BindingContext is LocationDetailViewModel vm)
+        {
+            var loc = vm.Location;
+            FileResult image = await MediaPicker.Default.CapturePhotoAsync();
+
+            if (image is not null)
+            {
+                if (!await vm.UploadImage(image))
+                {
+                    await DisplayAlert("API Error", "Failed to upload image.", "Okay");
+                }
+            }
+        }
+    }
 }

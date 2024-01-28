@@ -60,7 +60,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,10">
                 <Button Text="Edit" 
                         BackgroundColor="LightGreen" 
                         MaximumWidthRequest="150" 
@@ -72,6 +72,13 @@
                         FontAttributes="Bold"
                         ImageSource="image_add.png"
                         Clicked="AddImage_Clicked"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Button Text="Capture"
+                    BackgroundColor="LightYellow"
+                    FontAttributes="Bold"
+                    ImageSource="camera.png"
+                    Clicked="CaptureImage_Clicked"/>
                 <Button Text="Delete" 
                         BackgroundColor="Red" 
                         MaximumWidthRequest="120" 

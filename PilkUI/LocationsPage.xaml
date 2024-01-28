@@ -11,7 +11,10 @@
                 <DataTemplate>
                     <ViewCell>
                         <FlexLayout>
-                            <Image Source="{Binding Image}" HeightRequest="50" Margin="10"/>
+                            <Image Source="{Binding Image}"
+                                   HeightRequest="50" 
+                                   MaximumWidthRequest="50" 
+                                   Margin="10"/>
                             <StackLayout Padding="10">
                                 <Label Text="{Binding Name}" FontAttributes="Bold"/>
                                 <Label Text="{Binding Description}" />
