@@ -2,7 +2,6 @@
 using PilkUI.Rest.Serializers;
 using RestSharp;
 using System.Diagnostics;
-using System.Runtime.InteropServices.ObjectiveC;
 using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI.Rest
@@ -55,7 +54,7 @@ namespace PilkUI.Rest
             return new();
         }
 
-        public async Task<Location?> PostLocationAsync(Location location)
+        public async Task<Location?> CreateLocationAsync(Location location)
         {
             try
             {
@@ -65,6 +64,22 @@ namespace PilkUI.Rest
                 Debug.WriteLine(body);
                 request.AddStringBody(body, ContentType.Json);
                 var response = await _client.PostAsync<Location>(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<Location?> UpdateLocationAsync(Location location)
+        {
+            try
+            {
+                var request = new RestRequest($"locations/{location.Pk}/", method: Method.Patch);
+                request.AddStringBody(location.Serialize(), ContentType.Json);
+                var response = await _client.PatchAsync<Location>(request);
                 return response;
             }
             catch (Exception ex)

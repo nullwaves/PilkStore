@@ -57,7 +57,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\delete_bin.svg" />
 	  <None Remove="Resources\Images\folder_add.png" />
+	  <None Remove="Resources\Images\pencil.svg" />
 	  <None Remove="Resources\Images\save.svg" />
 	</ItemGroup>
 
@@ -81,6 +83,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="LocationsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="LocationUpdatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SettingsPage.xaml">

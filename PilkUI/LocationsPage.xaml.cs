@@ -18,8 +18,10 @@ public partial class LocationsPage : ContentPage
 	{
 		InitializeComponent();
 		Locations = [];
-		RefreshLocations();
-		BindingContext = this;
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        RefreshLocations();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        BindingContext = this;
         LocationListView.ItemTapped += LocationListView_ItemTapped;
         NavigatedTo += LocationsPage_NavigatedTo;
 	}

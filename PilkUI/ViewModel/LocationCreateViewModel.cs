@@ -43,7 +43,7 @@ namespace PilkUI.ViewModel
             var newLocation = new Location() { Name = Name, Description = Description };
             if (SelectedParent is Location parent && parent.Pk > -1)
                 newLocation.Parent = parent.Pk;
-            var response = await RestService.Instance.PostLocationAsync(newLocation);
+            var response = await RestService.Instance.CreateLocationAsync(newLocation);
             if (response is not null)
             {
                 await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), response } });

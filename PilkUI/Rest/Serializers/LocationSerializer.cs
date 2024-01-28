@@ -13,13 +13,14 @@ namespace PilkUI.Rest.Serializers
 
         public static string Serialize(this Location location)
         {
-            var dict = new Dictionary<string, object>()
+            var dict = new Dictionary<string, object?>()
             {
+                {"pk", location.Pk },
                 {"name", location.Name },
                 {"description", location.Description },
                 //{"image", "" },
-                {"children", Array.Empty<string>() },
-                {"items", Array.Empty<string>() },
+                {"children", location.Children },
+                {"items", Array.Empty<int>() },
             };
             if (location.Parent is int parent)
                 dict.Add("parent", parent);

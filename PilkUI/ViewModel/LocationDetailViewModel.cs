@@ -67,5 +67,11 @@ namespace PilkUI.ViewModel
             //await Shell.Current.GoToAsync("Loading");
             await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), SelectedChild } });
         }
+
+        [RelayCommand]
+        async Task Update()
+        {
+            await Shell.Current.GoToAsync("///Locations/Update", true, new Dictionary<string, object>() { { nameof(Location), Location } });
+        }
     }
 }

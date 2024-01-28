@@ -51,11 +51,20 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Delete" 
-                BackgroundColor="Red" 
-                MaximumWidthRequest="80" 
-                TextColor="White" 
-                FontAttributes="Bold"
-                Clicked="DeleteLocation_Clicked"/>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Button Text="Edit" 
+                    BackgroundColor="LightGreen" 
+                    MaximumWidthRequest="150" 
+                    FontAttributes="Bold"
+                    ImageSource="pencil.png"
+                    Command="{Binding UpdateCommand}"/>
+            <Button Text="Delete" 
+                    BackgroundColor="Red" 
+                    MaximumWidthRequest="120" 
+                    TextColor="White" 
+                    FontAttributes="Bold"
+                    ImageSource="delete_bin.png"
+                    Clicked="DeleteLocation_Clicked"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -8,6 +8,7 @@
             Routing.RegisterRoute("Loading", typeof(LoadingPage));
             Routing.RegisterRoute("Locations/Details", typeof(LocationDetailPage));
             Routing.RegisterRoute("Locations/Create", typeof(LocationCreatePage));
+            Routing.RegisterRoute("Locations/Update", typeof(LocationUpdatePage));
         }
     }
 }

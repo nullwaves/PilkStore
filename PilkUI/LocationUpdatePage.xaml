@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:PilkUI.Rest.Models"
+             xmlns:viewmodel="clr-namespace:PilkUI.ViewModel"
+             x:Class="PilkUI.LocationUpdatePage"
+             Title="Location Update"
+             x:DataType="viewmodel:LocationUpdateViewModel">
+    <ContentPage.BindingContext>
+        <viewmodel:LocationUpdateViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout Padding="10">
+        <!--Name-->
+        <Label Text="Name" FontSize="16" Padding="10"/>
+        <Entry Text="{Binding Location.Name}" Placeholder="Enter name..." Margin="10"/>
+        <!--Description-->
+        <Label Text="Description" FontSize="16" Padding="10"/>
+        <Editor Text="{Binding Location.Description}" Placeholder="Enter description..." AutoSize="TextChanges" Margin="10"/>
+        <!--Parent-->
+        <Picker Title="Parent Location" 
+                ItemsSource="{Binding Parents}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedParent}"
+                Margin="10"/>
+        <!--TODO: Image-->
+        <!--Save Button-->
+        <Button Text="Save" 
+                Command="{Binding SaveLocationCommand}"
+                ImageSource="save.png"
+                MaximumWidthRequest="400"
+                Margin="10"/>
+    </VerticalStackLayout>
+</ContentPage>
