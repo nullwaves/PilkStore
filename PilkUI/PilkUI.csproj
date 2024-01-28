@@ -59,6 +59,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\delete_bin.svg" />
 	  <None Remove="Resources\Images\folder_add.png" />
+	  <None Remove="Resources\Images\image_add.svg" />
 	  <None Remove="Resources\Images\pencil.svg" />
 	  <None Remove="Resources\Images\save.svg" />
 	</ItemGroup>

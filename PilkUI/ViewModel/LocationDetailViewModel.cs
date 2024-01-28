@@ -73,5 +73,16 @@ namespace PilkUI.ViewModel
         {
             await Shell.Current.GoToAsync("///Locations/Update", true, new Dictionary<string, object>() { { nameof(Location), Location } });
         }
+
+        internal async Task<bool> UploadImage(FileResult image)
+        {
+            var ret = await _server.UpdateLocationImageAsync(Location, image);
+            if (ret is null)
+            {
+                return false;
+            }
+            Location = ret;
+            return true;
+        }
     }
 }

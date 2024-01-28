@@ -67,6 +67,11 @@
                         FontAttributes="Bold"
                         ImageSource="pencil.png"
                         Command="{Binding UpdateCommand}"/>
+                <Button Text="Photo"
+                        BackgroundColor="Aquamarine"
+                        FontAttributes="Bold"
+                        ImageSource="image_add.png"
+                        Clicked="AddImage_Clicked"/>
                 <Button Text="Delete" 
                         BackgroundColor="Red" 
                         MaximumWidthRequest="120" 

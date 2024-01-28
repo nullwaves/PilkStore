@@ -34,4 +34,21 @@ public partial class LocationDetailPage : ContentPage
             }
         }
     }
+
+    private async void AddImage_Clicked(object sender, EventArgs e)
+    {
+        if(BindingContext is LocationDetailViewModel vm)
+        {
+            var loc = vm.Location;
+            FileResult image = await MediaPicker.Default.PickPhotoAsync();
+
+            if (image is not null)
+            {
+                if (!await vm.UploadImage(image))
+                {
+                    await DisplayAlert("API Error", "Failed to upload image.", "Okay");
+                }
+            }
+        }
+    }
 }

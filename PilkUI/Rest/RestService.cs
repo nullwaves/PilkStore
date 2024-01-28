@@ -104,5 +104,23 @@ namespace PilkUI.Rest
             }
             return false;
         }
+
+        internal async Task<Location?> UpdateLocationImageAsync(Location location, FileResult image)
+        {
+            try
+            {
+                var request = new RestRequest($"/locations/{location.Pk}/", method: Method.Patch);
+                request.AddStringBody(location.Serialize(), ContentType.Json);
+                request.AddFile("image", image.FullPath, image.ContentType);
+                var response = await _client.PatchAsync<Location>(request);
+                if (response is not null)
+                    return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write($"\tREST ERROR: {ex.Message}\n{ex.StackTrace}");
+            }
+            return null;
+        }
     }
 }
