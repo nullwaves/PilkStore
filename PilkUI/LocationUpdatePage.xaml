@@ -17,8 +17,8 @@
         <Label Text="Description" FontSize="16" Padding="10"/>
         <Editor Text="{Binding Location.Description}" Placeholder="Enter description..." AutoSize="TextChanges" Margin="10"/>
         <!--Parent-->
-        <Picker Title="Parent Location" 
-                ItemsSource="{Binding Parents}"
+        <Label Text="Change Parent Location:" FontSize="16" Padding="10"/>
+        <Picker ItemsSource="{Binding Parents}"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding SelectedParent}"
                 Margin="10"/>

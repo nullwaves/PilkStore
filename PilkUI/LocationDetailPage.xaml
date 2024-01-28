@@ -9,23 +9,31 @@
     <ContentPage.BindingContext>
         <viewmodel:LocationDetailViewModel/>
     </ContentPage.BindingContext>
-    <VerticalStackLayout>
+    <VerticalStackLayout  Margin="10">
         <Label 
             Text="{Binding Location.Name}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
-            FontSize="Header"/>
-        <Button
-            IsVisible="{Binding HasParent}"
-            Text="{Binding Parent.Name}"
-            Command="{Binding GoToParentCommand}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            FontSize="36"/>
+        <HorizontalStackLayout
+            HorizontalOptions="Center" 
+            Spacing="10"
+            Margin="0,10"
+            IsVisible="{Binding HasParent}">
+            <Label Text="Located in:"
+                   VerticalOptions="Center"
+                   FontSize="16"/>
+            <Button
+                Text="{Binding Parent.Name}"
+                Command="{Binding GoToParentCommand}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        </HorizontalStackLayout>
         <Label 
             Text="{Binding Location.Description}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Image Source="{Binding Location.Image}" MaximumWidthRequest="256"/>
+        <Image Source="{Binding Location.Image}" MaximumWidthRequest="256" Margin="10"/>
         <Label Text="Children" 
                FontSize="Large" 
                FontAttributes="Bold" 

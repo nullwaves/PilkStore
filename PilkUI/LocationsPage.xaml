@@ -5,12 +5,13 @@
              Title="Locations">
     <StackLayout Padding="10">
         <ListView x:Name="LocationListView" 
-                  ItemsSource="{Binding Locations}">
+                  ItemsSource="{Binding Locations}"
+                  RowHeight="70">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <FlexLayout>
-                            <Image Source="{Binding Image}" HeightRequest="50"/>
+                            <Image Source="{Binding Image}" HeightRequest="50" Margin="10"/>
                             <StackLayout Padding="10">
                                 <Label Text="{Binding Name}" FontAttributes="Bold"/>
                                 <Label Text="{Binding Description}" />
