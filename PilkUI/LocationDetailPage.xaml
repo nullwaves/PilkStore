@@ -72,6 +72,11 @@
                         FontAttributes="Bold"
                         ImageSource="image_add.png"
                         Clicked="AddImage_Clicked"/>
+                <Button Text="Pilk"
+                        BackgroundColor="Aquamarine"
+                        FontAttributes="Bold"
+                        ImageSource="file_add.png"
+                        Command="{Binding CreatePilkCommand}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Button Text="Capture"
@@ -87,6 +92,27 @@
                         ImageSource="delete_bin.png"
                         Clicked="DeleteLocation_Clicked"/>
             </HorizontalStackLayout>
+            <Label Text="Pilk" FontSize="24" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding Items}"
+                            SelectedItem="{Binding SelectedPilk}"
+                            SelectionChangedCommand="{Binding GoToPilkCommand}"
+                            SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Pilk">
+                        <Grid Padding="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Image}" HeightRequest="50" Grid.Column="0"/>
+                            <StackLayout Padding="10" Grid.Column="1">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}" />
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

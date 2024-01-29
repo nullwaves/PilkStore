@@ -22,3 +22,4 @@ class PilkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pilk
         fields = ['pk', 'url', 'location', 'name', 'description', 'image']
+        extra_kwargs = {'image': {'required': False}}

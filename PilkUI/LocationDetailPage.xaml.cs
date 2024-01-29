@@ -13,7 +13,7 @@ public partial class LocationDetailPage : ContentPage
     private async void DeleteLocation_Clicked(object sender, EventArgs e)
     {
 
-        if (BindingContext is LocationDetailViewModel vm)
+        if (BindingContext is LocationDetailViewModel vm && vm.Location is not null)
         {
             var message = "Are you sure you would like to delete this location?";
             if (vm.Location.Children.Count > 0)
@@ -61,7 +61,6 @@ public partial class LocationDetailPage : ContentPage
         }
         if (BindingContext is LocationDetailViewModel vm)
         {
-            var loc = vm.Location;
             FileResult image = await MediaPicker.Default.CapturePhotoAsync();
 
             if (image is not null)

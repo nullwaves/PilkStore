@@ -9,12 +9,14 @@
         public string Description { get; set; }
         public Uri? Image { get; set; }
         public List<int> Children { get; set; }
+        public List<int> Items { get; set; }
 
         public Location() 
         {
             Name = string.Empty;
             Description = string.Empty;
             Children = [];
+            Items = [];
         }
     }
 }

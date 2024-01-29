@@ -19,10 +19,12 @@ namespace PilkUI.ViewModel
         [ObservableProperty]
         object? selectedParent;
 
+#nullable disable
         public LocationUpdateViewModel()
         {
             Parents = new();
         }
+#nullable enable
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {

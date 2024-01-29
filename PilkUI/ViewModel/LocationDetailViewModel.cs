@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PilkUI.Rest;
+using PilkUI.Rest.Models;
 using System.Collections.ObjectModel;
 using Location = PilkUI.Rest.Models.Location;
 
@@ -11,7 +12,7 @@ namespace PilkUI.ViewModel
     {
         // Query Property
         [ObservableProperty]
-        private Location location;
+        private Location? location;
 
         // Post-Query Properties
         [ObservableProperty]
@@ -20,6 +21,10 @@ namespace PilkUI.ViewModel
         ObservableCollection<Location>? children = [];
         [ObservableProperty]
         Location? selectedChild;
+        [ObservableProperty]
+        ObservableCollection<Pilk>? items = [];
+        [ObservableProperty]
+        Pilk? selectedPilk;
 
         public bool HasParent => Parent != null;
         public bool HasChildren => Children?.Count > 0;
@@ -45,9 +50,17 @@ namespace PilkUI.ViewModel
                     if (child is not null)
                         Children.Add(child);
                 }
+                Items = [];
+                foreach (var item in Location.Items)
+                {
+                    var pilk = await _server.GetPilkFromPkAsync(item);
+                    if (pilk is not null)
+                        Items.Add(pilk);
+                }
             }
             OnPropertyChanged(nameof(Parent));
             OnPropertyChanged(nameof(Children));
+            OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(HasChildren));
             OnPropertyChanged(nameof(HasParent));
         }
@@ -57,7 +70,7 @@ namespace PilkUI.ViewModel
         { 
             if (Parent is null) return;
             //await Shell.Current.GoToAsync("Loading");
-            await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), Parent } });
+            await Shell.Current.GoToAsync("///Locations/Details", true, new() { { nameof(Location), Parent } });
         }
 
         [RelayCommand]
@@ -65,17 +78,33 @@ namespace PilkUI.ViewModel
         {
             if (SelectedChild is null) return;
             //await Shell.Current.GoToAsync("Loading");
-            await Shell.Current.GoToAsync("///Locations/Details", true, new Dictionary<string, object>() { { nameof(Location), SelectedChild } });
+            await Shell.Current.GoToAsync("///Locations/Details", true, new() { { nameof(Location), SelectedChild } });
+        }
+
+        [RelayCommand]
+        async Task GoToPilk()
+        {
+            if (SelectedPilk is null) return;
+            await Shell.Current.GoToAsync("///Locations/PilkDetails", true, new() { { nameof(Pilk), SelectedPilk } });
         }
 
         [RelayCommand]
         async Task Update()
         {
-            await Shell.Current.GoToAsync("///Locations/Update", true, new Dictionary<string, object>() { { nameof(Location), Location } });
+            if (Location is null) return;
+            await Shell.Current.GoToAsync("///Locations/Update", true, new() { { nameof(Location), Location } });
+        }
+
+        [RelayCommand]
+        async Task CreatePilk()
+        {
+            if (Location is null) return;
+            await Shell.Current.GoToAsync("///Locations/CreatePilk", true, new() { { nameof(Location), Location } });
         }
 
         internal async Task<bool> UploadImage(FileResult image)
         {
+            if (Location is null) return false;
             var ret = await _server.UpdateLocationImageAsync(Location, image);
             if (ret is null)
             {

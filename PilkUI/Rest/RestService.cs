@@ -1,4 +1,5 @@
 ﻿
+using PilkUI.Rest.Models;
 using PilkUI.Rest.Serializers;
 using RestSharp;
 using System.Diagnostics;
@@ -23,9 +24,15 @@ namespace PilkUI.Rest
         private RestClient CreateClient()
         {
             var options = new RestClientOptions(_server);
-            return new RestClient(options); 
+            return new RestClient(options);
         }
 
+        public static void Restart()
+        {
+            Instance._client = Instance.CreateClient();
+        }
+
+        #region Locations
         public async Task<List<Location>?> GetLocationsAsync()
         {
             Debug.WriteLine($"\tEndpoint: {_locationsEndpoint}");
@@ -119,10 +126,75 @@ namespace PilkUI.Rest
             }
             return null;
         }
+        #endregion
 
-        public static void Restart()
+        #region Pilk
+
+        public async Task<Pilk?> CreatePilkAsync(Pilk item)
         {
-            Instance._client = Instance.CreateClient();
+            try
+            {
+                var request = new RestRequest("pilk/", method: Method.Post);
+                request.AddStringBody(item.Serialize(), ContentType.Json);
+                var response = await _client.PostAsync<Pilk>(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return null;
         }
+
+        public async Task<Pilk?> GetPilkFromPkAsync(int pk)
+        {
+            try
+            {
+                var request = new RestRequest($"pilk/{pk}/");
+                return await _client.GetAsync<Pilk>(request);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return new();
+        }
+
+        internal async Task<Pilk?> UpdatePilkImageAsync(Pilk pilk, FileResult image)
+        {
+            try
+            {
+                var request = new RestRequest($"/pilk/{pilk.Pk}/", method: Method.Patch);
+                request.AddStringBody(pilk.Serialize(), ContentType.Json);
+                request.AddFile("image", image.FullPath, image.ContentType);
+                var response = await _client.PatchAsync<Pilk>(request);
+                if (response is not null)
+                    return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.Write($"\tREST ERROR: {ex.Message}\n{ex.StackTrace}");
+            }
+            return null;
+        }
+
+        public async Task<bool> DeletePilkAsync(Pilk pilk)
+        {
+            try
+            {
+                var request = new RestRequest($"/pilk/{pilk.Pk}", method: Method.Delete);
+                var response = await _client.DeleteAsync(request);
+                if (response is not null)
+                    return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return false;
+        }
+
+        #endregion
+
     }
 }
