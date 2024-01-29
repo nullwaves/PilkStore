@@ -59,10 +59,7 @@ namespace PilkUI.Rest
             try
             {
                 var request = new RestRequest("locations/", method:Method.Post);
-                // request.AddJsonBody(new Dictionary<string, string>() { { "Name", location.Name }, { "Description", location.Description } });
-                var body = location.Serialize();
-                Debug.WriteLine(body);
-                request.AddStringBody(body, ContentType.Json);
+                request.AddStringBody(location.Serialize(), ContentType.Json);
                 var response = await _client.PostAsync<Location>(request);
                 return response;
             }
