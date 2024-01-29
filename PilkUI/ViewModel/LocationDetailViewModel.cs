@@ -28,6 +28,7 @@ namespace PilkUI.ViewModel
 
         public bool HasParent => Parent != null;
         public bool HasChildren => Children?.Count > 0;
+        public bool NotHasPilk => Items?.Count < 1;
 
         private RestService _server = RestService.Instance;
 
@@ -63,6 +64,7 @@ namespace PilkUI.ViewModel
             OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(HasChildren));
             OnPropertyChanged(nameof(HasParent));
+            OnPropertyChanged(nameof(NotHasPilk));
         }
 
         [RelayCommand]
