@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
+using PilkUI.Rest;
 
 namespace PilkUI;
 
@@ -19,6 +20,7 @@ public partial class SettingsPage : ContentPage
 		if (Server != null)
 		{
 			SettingsService.SetPilkServer(Server);
+			RestService.Restart();
 			await Shell.Current.GoToAsync("///Locations");
 		}
 	}

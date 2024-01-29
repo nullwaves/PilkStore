@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Graphics;
 using PilkUI.Rest;
 using System.Collections.ObjectModel;
-using System.Xml.Linq;
 using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI.ViewModel

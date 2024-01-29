@@ -10,7 +10,7 @@ namespace PilkUI.Rest
     {
         public static readonly RestService Instance = new();
 
-        readonly RestClient _client;
+        private RestClient _client;
 
         string _server => SettingsService.GetPilkServer();
         RestRequest _locationsEndpoint => new("locations/");
@@ -121,6 +121,11 @@ namespace PilkUI.Rest
                 Debug.Write($"\tREST ERROR: {ex.Message}\n{ex.StackTrace}");
             }
             return null;
+        }
+
+        public static void Restart()
+        {
+            Instance._client = Instance.CreateClient();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace PilkUI.Rest.Serializers
 {
     public static class LocationSerializer
     {
-        public static JsonSerializerOptions _serializerOptions = new()
+        private static JsonSerializerOptions _serializerOptions = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true,
