@@ -39,7 +39,6 @@ public partial class LocationDetailPage : ContentPage
     {
         if(BindingContext is LocationDetailViewModel vm)
         {
-            var loc = vm.Location;
             FileResult image = await MediaPicker.Default.PickPhotoAsync();
 
             if (image is not null)

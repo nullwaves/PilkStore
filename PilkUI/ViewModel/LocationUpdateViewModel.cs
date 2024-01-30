@@ -22,19 +22,15 @@ namespace PilkUI.ViewModel
 #nullable disable
         public LocationUpdateViewModel()
         {
-            Parents = new();
+            Parents = [];
         }
 #nullable enable
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("Location"))
+            if (query.TryGetValue("Location", out object? value))
             {
-                var loc = query["Location"] as Location;
-                if (loc is null)
-                {
-                    throw new NullReferenceException();
-                }
+                var loc = value as Location ?? throw new NullReferenceException();
                 Location = loc;
                 await RefreshParents();
                 SelectedParent = loc.Parent;

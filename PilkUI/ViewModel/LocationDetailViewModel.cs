@@ -30,18 +30,14 @@ namespace PilkUI.ViewModel
         public bool HasChildren => Children?.Count > 0;
         public bool NotHasPilk => Items?.Count < 1;
 
-        private RestService _server = RestService.Instance;
+        private readonly RestService _server = RestService.Instance;
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("Location"))
+            if (query.TryGetValue("Location", out object? value))
             {
-                var qloc = query["Location"] as Location;
-                if (qloc is null)
-                    throw new NullReferenceException();
-                var loc = await _server.GetLocationFromPkAsync(qloc.Pk);
-                if (loc is null)
-                    throw new NullReferenceException();
+                var queryLoc = value as Location ?? throw new NullReferenceException();
+                var loc = await _server.GetLocationFromPkAsync(queryLoc.Pk) ?? throw new NullReferenceException();
                 Location = loc;
                 var par = Location.Parent;
                 Parent = par is null ? null : await _server.GetLocationFromPkAsync((int)par);
