@@ -40,9 +40,9 @@ namespace PilkUI.ViewModel
         private async Task RefreshParents()
         {
             Parents.Add(new Location() { Pk = -1, Name = "None" });
-            var locs = await RestService.Instance.GetLocationsAsync();
-            if (locs is null) return;
-            foreach (var loc in locs)
+            var locList = await RestService.Instance.GetLocationsAsync();
+            if (locList is null) return;
+            foreach (var loc in locList)
                 Parents.Add(loc);
         }
 
