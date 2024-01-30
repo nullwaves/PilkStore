@@ -36,7 +36,6 @@ namespace PilkUI.Rest
         #region Locations
         public async Task<List<Location>?> GetLocationsAsync()
         {
-            Debug.WriteLine($"\tEndpoint: {_locationsEndpoint}");
             try
             {
                 return await _client.GetAsync<List<Location>>(_locationsEndpoint);
@@ -127,6 +126,21 @@ namespace PilkUI.Rest
             }
             return null;
         }
+        public async Task<List<Location>?> SearchLocationsAsync(string query)
+        {
+            try
+            {
+                var request = new RestRequest($"locations/?search={query}");
+                var response = await _client.GetAsync<List<Location>>(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return null;
+        }
+
         #endregion
 
         #region Pilk
@@ -202,6 +216,21 @@ namespace PilkUI.Rest
                 var request = new RestRequest($"pilk/{pilk.Pk}/", method: Method.Patch);
                 request.AddStringBody(pilk.Serialize(), ContentType.Json);
                 var response = await _client.PatchAsync<Pilk>(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<List<Pilk>?> SearchPilkAsync(string query)
+        {
+            try
+            {
+                var request = new RestRequest($"pilk/?search={query}");
+                var response = await _client.GetAsync<List<Pilk>>(request);
                 return response;
             }
             catch (Exception ex)
