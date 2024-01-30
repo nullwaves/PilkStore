@@ -38,7 +38,7 @@ namespace PilkUI.ViewModel
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("Location") && query["Location"] is Location loc)
+            if (query.TryGetValue("Location", out object? value) && value is Location loc)
             {
                 Location = loc;
             }

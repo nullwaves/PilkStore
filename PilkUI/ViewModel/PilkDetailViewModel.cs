@@ -16,7 +16,7 @@ namespace PilkUI.ViewModel
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("Pilk") && query["Pilk"] is Pilk item)
+            if (query.TryGetValue("Pilk", out object? value) && value is Pilk item)
             {
                 Pilk = item;
                 Location = await RestService.Instance.GetLocationFromPkAsync(item.Location);

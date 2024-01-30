@@ -1,3 +1,4 @@
+using PilkUI.ViewModel;
 using Location = PilkUI.Rest.Models.Location;
 
 namespace PilkUI;
@@ -8,12 +9,13 @@ public partial class LocationsPage : ContentPage
 	{
 		InitializeComponent();
         LocationListView.ItemTapped += LocationListView_ItemTapped;
-        // NavigatedTo += LocationsPage_NavigatedTo;
+        NavigatedTo += LocationsPage_NavigatedTo;
 	}
 
     private async void LocationsPage_NavigatedTo(object? sender, NavigatedToEventArgs e)
     {
-		//await (BindingContext as LocationListViewModel).RefreshLocations();
+        if (BindingContext is LocationListViewModel vm)
+		    await vm.RefreshLocations();
     }
 
     private async void LocationListView_ItemTapped(object? sender, ItemTappedEventArgs e)

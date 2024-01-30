@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.Maui.Devices.Sensors;
 using PilkUI.Rest.Models;
 using PilkUI.Rest.Serializers;
 using RestSharp;
@@ -14,15 +13,15 @@ namespace PilkUI.Rest
 
         private RestClient _client;
 
-        string _server => SettingsService.GetPilkServer();
-        RestRequest _locationsEndpoint => new("locations/");
+        private static string _server => SettingsService.GetPilkServer();
+        private static RestRequest _locationsEndpoint => new("locations/");
         
         public RestService()
         {
             _client = CreateClient();
         }
 
-        private RestClient CreateClient()
+        private static RestClient CreateClient()
         {
             var options = new RestClientOptions(_server);
             return new RestClient(options);
@@ -30,7 +29,7 @@ namespace PilkUI.Rest
 
         public static void Restart()
         {
-            Instance._client = Instance.CreateClient();
+            Instance._client = CreateClient();
         }
 
         #region Locations

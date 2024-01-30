@@ -17,7 +17,7 @@ namespace PilkUI.ViewModel
             await Shell.Current.GoToAsync("/Create");
         }
 
-        private async Task RefreshLocations()
+        public async Task RefreshLocations()
         {
             Locations.Clear();
             var locList = await RestService.Instance.GetLocationsAsync();
@@ -36,9 +36,6 @@ namespace PilkUI.ViewModel
         public LocationListViewModel()
         {
             Locations = [];
-#pragma warning disable CS4014
-            RefreshLocations();
-#pragma warning restore CS4014
         }
     }
 }
