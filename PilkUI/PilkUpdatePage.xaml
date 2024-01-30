@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:PilkUI.Rest.Models"
+             xmlns:viewmodel="clr-namespace:PilkUI.ViewModel"
+             x:Class="PilkUI.PilkUpdatePage"
+             Title="Pilk Update"
+             x:DataType="viewmodel:PilkUpdateViewModel">
+    <ContentPage.BindingContext>
+        <viewmodel:PilkUpdateViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout Padding="10">
+        <!--Name-->
+        <Label Text="Name" FontSize="16" Padding="10"/>
+        <Entry Text="{Binding Pilk.Name}" Placeholder="Enter name..." Margin="10"/>
+        <!--Description-->
+        <Label Text="Description" FontSize="16" Padding="10"/>
+        <Editor Text="{Binding Pilk.Description}" Placeholder="Enter description..." AutoSize="TextChanges" Margin="10"/>
+        <!--Location-->
+        <Label Text="Change Location:" FontSize="16" Padding="10"/>
+        <Picker ItemsSource="{Binding Locations}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedLocation}"
+                Margin="10"/>
+        <!--Save Button-->
+        <Button Text="Save" 
+                Command="{Binding SavePilkCommand}"
+                ImageSource="save.png"
+                MaximumWidthRequest="400"
+                Margin="10"/>
+    </VerticalStackLayout>
+</ContentPage>

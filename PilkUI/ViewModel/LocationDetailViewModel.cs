@@ -36,11 +36,12 @@ namespace PilkUI.ViewModel
         {
             if (query.ContainsKey("Location"))
             {
-                var loc = query["Location"] as Location;
-                if (loc is null)
-                {
+                var qloc = query["Location"] as Location;
+                if (qloc is null)
                     throw new NullReferenceException();
-                }
+                var loc = await _server.GetLocationFromPkAsync(qloc.Pk);
+                if (loc is null)
+                    throw new NullReferenceException();
                 Location = loc;
                 var par = Location.Parent;
                 Parent = par is null ? null : await _server.GetLocationFromPkAsync((int)par);
@@ -51,13 +52,7 @@ namespace PilkUI.ViewModel
                     if (child is not null)
                         Children.Add(child);
                 }
-                Items = [];
-                foreach (var item in Location.Items)
-                {
-                    var pilk = await _server.GetPilkFromPkAsync(item);
-                    if (pilk is not null)
-                        Items.Add(pilk);
-                }
+                await RefreshItems();
             }
             OnPropertyChanged(nameof(Parent));
             OnPropertyChanged(nameof(Children));
@@ -114,6 +109,20 @@ namespace PilkUI.ViewModel
             }
             Location = ret;
             return true;
+        }
+
+        internal async Task RefreshItems()
+        {
+            ObservableCollection<Pilk> items = [];
+            if (Location is null) return;
+            foreach (var item in Location.Items)
+            {
+                var pilk = await _server.GetPilkFromPkAsync(item);
+                if (pilk is not null)
+                    items.Add(pilk);
+            }
+            Items?.Clear();
+            Items = items;
         }
     }
 }

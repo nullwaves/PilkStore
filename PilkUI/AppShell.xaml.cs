@@ -11,6 +11,7 @@
             Routing.RegisterRoute("Locations/Update", typeof(LocationUpdatePage));
             Routing.RegisterRoute("Locations/CreatePilk", typeof(PilkCreatePage));
             Routing.RegisterRoute("Locations/PilkDetails", typeof(PilkDetailPage));
+            Routing.RegisterRoute("Locations/PilkUpdate", typeof(PilkUpdatePage));
         }
     }
 }

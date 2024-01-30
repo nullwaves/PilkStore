@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Maui.Devices.Sensors;
 using PilkUI.Rest.Models;
 using PilkUI.Rest.Serializers;
 using RestSharp;
@@ -109,7 +110,7 @@ namespace PilkUI.Rest
             return false;
         }
 
-        internal async Task<Location?> UpdateLocationImageAsync(Location location, FileResult image)
+        public async Task<Location?> UpdateLocationImageAsync(Location location, FileResult image)
         {
             try
             {
@@ -160,7 +161,7 @@ namespace PilkUI.Rest
             return new();
         }
 
-        internal async Task<Pilk?> UpdatePilkImageAsync(Pilk pilk, FileResult image)
+        public async Task<Pilk?> UpdatePilkImageAsync(Pilk pilk, FileResult image)
         {
             try
             {
@@ -192,6 +193,22 @@ namespace PilkUI.Rest
                 Debug.WriteLine($"\tREST ERROR: {ex.Message}");
             }
             return false;
+        }
+
+        public async Task<Pilk?> UpdatePilkAsync(Pilk pilk)
+        {
+            try
+            {
+                var request = new RestRequest($"pilk/{pilk.Pk}/", method: Method.Patch);
+                request.AddStringBody(pilk.Serialize(), ContentType.Json);
+                var response = await _client.PatchAsync<Pilk>(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
+            }
+            return null;
         }
 
         #endregion

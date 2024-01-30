@@ -34,7 +34,7 @@ namespace PilkUI.ViewModel
         async Task Update()
         {
             if (Pilk is null) return;
-            await Shell.Current.DisplayAlert("NYI", "Not yet Implemented", "Okay");
+            await Shell.Current.GoToAsync("///Locations/PilkUpdate", true, new() { { nameof(Pilk), Pilk } });
         }
 
         internal async Task<bool> UploadImage(FileResult image)
