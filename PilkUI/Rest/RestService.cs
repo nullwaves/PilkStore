@@ -50,7 +50,7 @@ namespace PilkUI.Rest
         {
             try
             {
-                var request = new RestRequest($"locations/{pk}");
+                var request = new RestRequest($"locations/{pk}/");
                 return await _client.GetAsync<Location>(request);
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace PilkUI.Rest
         {
             try
             {
-                var request = new RestRequest($"/locations/{location.Pk}", method: Method.Delete);
+                var request = new RestRequest($"/locations/{location.Pk}/", method: Method.Delete);
                 var response = await _client.DeleteAsync(request);
                 if (response is not null)
                     return response.IsSuccessStatusCode;
@@ -196,7 +196,7 @@ namespace PilkUI.Rest
         {
             try
             {
-                var request = new RestRequest($"/pilk/{pilk.Pk}", method: Method.Delete);
+                var request = new RestRequest($"/pilk/{pilk.Pk}/", method: Method.Delete);
                 var response = await _client.DeleteAsync(request);
                 if (response is not null)
                     return response.IsSuccessStatusCode;

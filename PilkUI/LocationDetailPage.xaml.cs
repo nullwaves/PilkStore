@@ -12,9 +12,13 @@ public partial class LocationDetailPage : ContentPage
 
     private async void DeleteLocation_Clicked(object sender, EventArgs e)
     {
-
         if (BindingContext is LocationDetailViewModel vm && vm.Location is not null)
         {
+            if (vm.Location.Items.Count > 0)
+            {
+                await DisplayAlert("Error Deleting Location", "Cannot delete locations with pilk. Please move or delete pilk before deleting location.", "Okay");
+                return;
+            }
             var message = "Are you sure you would like to delete this location?";
             if (vm.Location.Children.Count > 0)
                 message += $" This will delete {vm.Location.Children.Count} sub-locations.";
@@ -29,7 +33,7 @@ public partial class LocationDetailPage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("API Error", "Failed to delete location.", "Okay");
+                    await DisplayAlert("API Error", "Failed to delete location. Are all sub-locations empty?", "Okay");
                 }
             }
         }
