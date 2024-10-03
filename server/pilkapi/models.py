@@ -10,6 +10,9 @@ class Location(models.Model):
     image = models.ImageField(
         upload_to='pilk/location', default='pilk-default.jpg')
 
+    class Meta:
+        ordering = ["name"]
+
 
 class Pilk(models.Model):
     location = models.ForeignKey(
@@ -18,3 +21,6 @@ class Pilk(models.Model):
     description = models.TextField()
     image = models.ImageField(
         upload_to='pilk/items', default='pilk-default.jpg')
+
+    class Meta:
+        ordering = ["name"]
