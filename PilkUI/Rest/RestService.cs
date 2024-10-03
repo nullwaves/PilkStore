@@ -1,5 +1,4 @@
-﻿
-using PilkUI.Rest.Models;
+﻿using PilkUI.Rest.Models;
 using PilkUI.Rest.Serializers;
 using RestSharp;
 using System.Diagnostics;
@@ -33,11 +32,16 @@ namespace PilkUI.Rest
         }
 
         #region Locations
-        public async Task<List<Location>?> GetLocationsAsync()
+        public async Task<List<Location>?> GetLocationsAsync(string searchText = "")
         {
+            var endpoint = _locationsEndpoint;
+            if (searchText.Length > 0)
+            {
+                endpoint = new RestRequest($"locations/?search={Uri.EscapeDataString(searchText)}");
+            }
             try
             {
-                return await _client.GetAsync<List<Location>>(_locationsEndpoint);
+                return await _client.GetAsync<List<Location>>(endpoint);
             }
             catch (Exception ex)
             {

@@ -11,6 +11,9 @@ namespace PilkUI.ViewModel
         [ObservableProperty]
         ObservableCollection<Location> locations;
 
+        [ObservableProperty]
+        string searchText;
+
         [RelayCommand]
         static async Task GoToCreate()
         {
@@ -20,7 +23,7 @@ namespace PilkUI.ViewModel
         public async Task RefreshLocations()
         {
             Locations.Clear();
-            var locList = await RestService.Instance.GetLocationsAsync();
+            var locList = await RestService.Instance.GetLocationsAsync(SearchText);
             if (locList is not null)
             {
                 foreach (var loc in locList)
@@ -36,6 +39,7 @@ namespace PilkUI.ViewModel
         public LocationListViewModel()
         {
             Locations = [];
+            searchText = string.Empty;
         }
     }
 }

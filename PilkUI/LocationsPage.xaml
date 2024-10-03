@@ -8,6 +8,7 @@
         <viewmodel:LocationListViewModel/>
     </ContentPage.BindingContext>
     <StackLayout Padding="10">
+        <Entry x:Name="SearchInput" Text="{Binding SearchText}" Margin="10" Placeholder="Search..."/>
         <ListView x:Name="LocationListView" 
                   ItemsSource="{Binding Locations}"
                   RowHeight="70">

@@ -10,7 +10,14 @@ public partial class LocationsPage : ContentPage
 		InitializeComponent();
         LocationListView.ItemTapped += LocationListView_ItemTapped;
         NavigatedTo += LocationsPage_NavigatedTo;
+        SearchInput.TextChanged += SearchInput_TextChanged;
 	}
+
+    private async void SearchInput_TextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (BindingContext is LocationListViewModel vm)
+            await vm.RefreshLocations();
+    }
 
     private async void LocationsPage_NavigatedTo(object? sender, NavigatedToEventArgs e)
     {
