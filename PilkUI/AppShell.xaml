@@ -14,6 +14,13 @@
                 Route="Locations" />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="Pilk">
+        <Tab>
+            <ShellContent
+            ContentTemplate="{DataTemplate local:PilkListPage}"
+            Route="Pilk" />
+        </Tab>
+    </FlyoutItem>
     <FlyoutItem Title="Settings">
         <Tab>
             <ShellContent

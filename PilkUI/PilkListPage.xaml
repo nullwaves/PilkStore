@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PilkUI.ViewModel"
+             x:Class="PilkUI.PilkListPage"
+             Title="Pilks">
+    <ContentPage.BindingContext>
+        <viewmodel:PilkListViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout Padding="10">
+        <Entry x:Name="SearchInput" Text="{Binding SearchText}" Margin="10" Placeholder="Search..."/>
+        <ListView x:Name="PilkListView" 
+                  ItemsSource="{Binding Pilks}"
+                  RowHeight="70">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <FlexLayout>
+                            <Image Source="{Binding Image}"
+                                   HeightRequest="50"
+                                   WidthRequest="50"
+                                   Margin="0,10"/>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}" />
+                            </StackLayout>
+                        </FlexLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

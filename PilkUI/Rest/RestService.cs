@@ -129,24 +129,29 @@ namespace PilkUI.Rest
             }
             return null;
         }
-        public async Task<List<Location>?> SearchLocationsAsync(string query)
+
+        #endregion
+
+        #region Pilk
+
+        public async Task<List<Pilk>?> GetPilksAsync(string searchText = "")
         {
+
+            var endpoint = new RestRequest("pilk/");
+            if (searchText.Length > 0)
+            {
+                endpoint = new RestRequest($"pilk/?search={Uri.EscapeDataString(searchText)}");
+            }
             try
             {
-                var request = new RestRequest($"locations/?search={query}");
-                var response = await _client.GetAsync<List<Location>>(request);
-                return response;
+                return await _client.GetAsync<List<Pilk>>(endpoint);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"\tREST ERROR: {ex.Message}");
             }
-            return null;
+            return [];
         }
-
-        #endregion
-
-        #region Pilk
 
         public async Task<Pilk?> CreatePilkAsync(Pilk item)
         {
@@ -219,21 +224,6 @@ namespace PilkUI.Rest
                 var request = new RestRequest($"pilk/{pilk.Pk}/", method: Method.Patch);
                 request.AddStringBody(pilk.Serialize(), ContentType.Json);
                 var response = await _client.PatchAsync<Pilk>(request);
-                return response;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"\tREST ERROR: {ex.Message}");
-            }
-            return null;
-        }
-
-        public async Task<List<Pilk>?> SearchPilkAsync(string query)
-        {
-            try
-            {
-                var request = new RestRequest($"pilk/?search={query}");
-                var response = await _client.GetAsync<List<Pilk>>(request);
                 return response;
             }
             catch (Exception ex)
